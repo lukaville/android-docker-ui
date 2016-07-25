@@ -1,4 +1,4 @@
-package ru.lukaville.dockerui.model.registry
+package ru.lukaville.dockerui.entities.registry
 
 import io.realm.RealmObject
 

@@ -1,7 +1,7 @@
 package ru.lukaville.dockerui.repository.registry
 
 import io.realm.Realm
-import ru.lukaville.dockerui.model.registry.Registry
+import ru.lukaville.dockerui.entities.registry.Registry
 import rx.Observable
 
 class RealmRegistryRepository(val realm: () -> Realm) : RegistryRepository {

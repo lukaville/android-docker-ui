@@ -1,4 +1,4 @@
-package ru.lukaville.dockerui
+package ru.lukaville.dockerui.ui.android
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar
 import com.github.salomonbrys.kodein.KodeinInjected
 import com.github.salomonbrys.kodein.KodeinInjector
 import com.github.salomonbrys.kodein.android.appKodein
+import ru.lukaville.dockerui.R
 import ru.lukaville.dockerui.util.bindView
 
 abstract class BaseActivity : AppCompatActivity(), KodeinInjected {

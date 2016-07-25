@@ -1,6 +1,6 @@
 package ru.lukaville.dockerui.repository.registry
 
-import ru.lukaville.dockerui.model.registry.Registry
+import ru.lukaville.dockerui.entities.registry.Registry
 import rx.Observable
 
 interface RegistryRepository {

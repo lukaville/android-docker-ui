@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+>
+
+    <ru.lukaville.dockerui.ui.android.core.widget.StateRecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+    />
+
+    <include
+        android:id="@+id/empty"
+        layout="@layout/state_empty"/>
+
+    <include
+        android:id="@+id/error"
+        layout="@layout/state_error"/>
+
+    <include
+        android:id="@+id/progress"
+        layout="@layout/state_progress"/>
+
+</FrameLayout>
