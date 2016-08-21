@@ -4,6 +4,7 @@ import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
 import android.view.View
+import ru.lukaville.dockerui.ui.State
 
 class StateRecyclerView : RecyclerView {
 
@@ -11,8 +12,8 @@ class StateRecyclerView : RecyclerView {
     private var mErrorView: View? = null
     private var mProgressView: View? = null
 
-    private var mCurrentState: ru.lukaville.dockerui.ui.view.State =
-            ru.lukaville.dockerui.ui.view.State.Progress()
+    private var mCurrentState: ru.lukaville.dockerui.ui.State =
+            ru.lukaville.dockerui.ui.State.Progress()
 
     constructor(context: Context) : super(context) {
     }
@@ -25,10 +26,10 @@ class StateRecyclerView : RecyclerView {
 
     private fun setCurrentViewVisibility(visibilityState: Int) {
         val view = when (mCurrentState) {
-            is ru.lukaville.dockerui.ui.view.State.Empty -> mEmptyView
-            is ru.lukaville.dockerui.ui.view.State.Error -> mErrorView
-            is ru.lukaville.dockerui.ui.view.State.Progress -> mProgressView
-            is ru.lukaville.dockerui.ui.view.State.Content<*> -> null
+            is ru.lukaville.dockerui.ui.State.Empty -> mEmptyView
+            is ru.lukaville.dockerui.ui.State.Error -> mErrorView
+            is ru.lukaville.dockerui.ui.State.Progress -> mProgressView
+            is ru.lukaville.dockerui.ui.State.Content<*> -> null
         }
 
         if (view != null) {
@@ -36,13 +37,13 @@ class StateRecyclerView : RecyclerView {
         }
     }
 
-    private fun updateState(newState: ru.lukaville.dockerui.ui.view.State) {
+    private fun updateState(newState: ru.lukaville.dockerui.ui.State) {
         setCurrentViewVisibility(View.GONE)
         mCurrentState = newState
         setCurrentViewVisibility(View.VISIBLE)
     }
 
-    fun setState(newState: ru.lukaville.dockerui.ui.view.State) {
+    fun setState(newState: ru.lukaville.dockerui.ui.State) {
         if (newState !== mCurrentState) {
             updateState(newState)
         }

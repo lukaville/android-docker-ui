@@ -2,4 +2,10 @@
     <string name="app_name">Docker UI</string>
     <string name="empty">There is no data available. Yet.</string>
     <string name="error">An error occurred</string>
+    <string name="create">Create</string>
+    <string name="enter_title">Enter title</string>
+    <string name="registry_url">Registry URL</string>
+    <string name="login">Basic auth login</string>
+    <string name="password">Basic auth password</string>
+    <string name="add_registry">Add registry</string>
 </resources>

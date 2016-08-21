@@ -5,25 +5,37 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.github.salomonbrys.kodein.instance
 import ru.lukaville.dockerui.R
 import ru.lukaville.dockerui.entities.registry.Registry
+import ru.lukaville.dockerui.presenter.registry.RegistryListPresenter
 import ru.lukaville.dockerui.ui.android.BaseFragment
 import ru.lukaville.dockerui.ui.android.core.OnItemClickListener
 import ru.lukaville.dockerui.ui.android.core.widget.StateRecyclerView
 import ru.lukaville.dockerui.ui.view.RegistryListView
 import ru.lukaville.dockerui.util.bindView
+import rx.Observable
+import rx.lang.kotlin.PublishSubject
 import java.util.*
 
-class RegistryListFragment : BaseFragment(), RegistryListView {
+class RegistryListFragment : BaseFragment<RegistryListView>(), RegistryListView {
     val recyclerView: StateRecyclerView by bindView(R.id.recycler_view)
 
     val emptyView: View by bindView(R.id.empty)
     val errorView: View by bindView(R.id.error)
     val progressView: View by bindView(R.id.progress)
 
-    val addFab: View by bindView(R.id.add)
-
     lateinit var adapter: RegistryAdapter
+
+    val presenter: RegistryListPresenter by injector.instance()
+
+    val registryClicks = PublishSubject<Registry>()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        presenter.view = this
+        registerPresenter(presenter)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_registry_list, container, false)
@@ -32,13 +44,6 @@ class RegistryListFragment : BaseFragment(), RegistryListView {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
-        initFab()
-    }
-
-    private fun initFab() {
-        addFab.setOnClickListener {
-            //
-        }
     }
 
     private fun initRecyclerView() {
@@ -51,7 +56,8 @@ class RegistryListFragment : BaseFragment(), RegistryListView {
         adapter = RegistryAdapter()
         adapter.itemClickListener = object : OnItemClickListener {
             override fun onItemClicked(index: Int, view: View) {
-                //
+                val registry = adapter.registries[index]
+                registryClicks.onNext(registry)
             }
         }
 
@@ -61,5 +67,9 @@ class RegistryListFragment : BaseFragment(), RegistryListView {
         }
 
         recyclerView.adapter = adapter
+    }
+
+    override fun registryClicks(): Observable<Registry> {
+        return registryClicks
     }
 }

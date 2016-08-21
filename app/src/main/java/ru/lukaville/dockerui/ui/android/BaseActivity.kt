@@ -1,6 +1,7 @@
 package ru.lukaville.dockerui.ui.android
 
 import android.os.Bundle
+import android.support.annotation.DrawableRes
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import com.github.salomonbrys.kodein.KodeinInjected
@@ -27,5 +28,19 @@ abstract class BaseActivity : AppCompatActivity(), KodeinInjected {
 
     private fun initToolbar() {
         setSupportActionBar(toolbar)
+
+        val actionBar = supportActionBar
+
+        if (getHomeAsUpIndicator() != 0) {
+            actionBar?.setDisplayHomeAsUpEnabled(true)
+            if (getHomeAsUpIndicator() != 0) {
+                actionBar?.setHomeAsUpIndicator(getHomeAsUpIndicator())
+            }
+        }
+    }
+
+    @DrawableRes
+    protected open fun getHomeAsUpIndicator(): Int {
+        return 0
     }
 }

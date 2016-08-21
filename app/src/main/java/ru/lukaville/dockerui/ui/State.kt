@@ -1,4 +1,4 @@
-package ru.lukaville.dockerui.ui.view
+package ru.lukaville.dockerui.ui
 
 sealed class State {
     class Progress : State()
