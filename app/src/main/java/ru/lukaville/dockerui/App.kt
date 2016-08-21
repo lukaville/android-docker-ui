@@ -12,7 +12,7 @@ import ru.lukaville.dockerui.api.apiModule
 import ru.lukaville.dockerui.presenter.presenterModule
 import ru.lukaville.dockerui.repository.realmModule
 import ru.lukaville.dockerui.repository.repositoryModule
-import ru.lukaville.dockerui.ui.android.routerModule
+import ru.lukaville.dockerui.ui.android.core.router.routerModule
 
 class App : Application(), KodeinAware {
     override val kodein by Kodein.lazy {

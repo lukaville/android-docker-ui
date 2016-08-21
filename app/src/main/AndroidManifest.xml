@@ -20,7 +20,12 @@
         </activity>
         <activity
             android:name=".ui.android.registry.RegistryCreateActivity"
-            android:label="@string/add_registry"
+            android:label="@string/add_registry_title"
+        >
+        </activity>
+        <activity
+            android:name=".ui.android.repository.RepositoryListActivity"
+            android:label="@string/images_title"
         >
         </activity>
     </application>

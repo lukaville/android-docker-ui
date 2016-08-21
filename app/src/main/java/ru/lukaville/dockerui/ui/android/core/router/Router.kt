@@ -1,14 +1,16 @@
-package ru.lukaville.dockerui.ui.android
+package ru.lukaville.dockerui.ui.android.core.router
 
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
-import ru.lukaville.dockerui.entities.registry.Registry
+import ru.lukaville.dockerui.entities.Registry
 import ru.lukaville.dockerui.ui.android.registry.RegistryCreateActivity
+import ru.lukaville.dockerui.ui.android.repository.RepositoryListActivity
 
 class Router(val activity: Activity) {
     fun detailRegistry(registry: Registry) {
-        Log.d("Router", "Open registry: " + registry.toString())
+        val intent = Intent(activity, RepositoryListActivity::class.java)
+        intent.putExtra(RepositoryListActivity.REGISTRY_URL_EXTRA, registry.url)
+        activity.startActivity(intent)
     }
 
     fun createRegistry() {

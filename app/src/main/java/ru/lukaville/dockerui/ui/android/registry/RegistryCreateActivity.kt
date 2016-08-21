@@ -5,8 +5,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
 import ru.lukaville.dockerui.R
-import ru.lukaville.dockerui.entities.registry.Credentials
-import ru.lukaville.dockerui.entities.registry.Registry
+import ru.lukaville.dockerui.entities.Credentials
+import ru.lukaville.dockerui.entities.Registry
 import ru.lukaville.dockerui.ui.android.BaseActivity
 import ru.lukaville.dockerui.ui.view.RegistryCreateView
 import ru.lukaville.dockerui.util.bindView

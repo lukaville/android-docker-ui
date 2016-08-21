@@ -1,12 +1,14 @@
-package ru.lukaville.dockerui.ui.android.registry
+package ru.lukaville.dockerui.ui.android.repository
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import io.realm.RealmList
 import ru.lukaville.dockerui.R
-import ru.lukaville.dockerui.entities.Registry
+import ru.lukaville.dockerui.entities.Repository
+import ru.lukaville.dockerui.entities.Tag
 import ru.lukaville.dockerui.ui.android.BaseFragment
 import ru.lukaville.dockerui.ui.android.core.OnItemClickListener
 import ru.lukaville.dockerui.ui.android.core.widget.StateRecyclerView
@@ -14,10 +16,18 @@ import ru.lukaville.dockerui.util.bindView
 import rx.lang.kotlin.PublishSubject
 import java.util.*
 
-class RegistryListFragment : BaseFragment() {
+class RepositoryListFragment : BaseFragment() {
     companion object {
-        fun newInstance(): RegistryListFragment {
-            return RegistryListFragment()
+        const val REGISTRY_URL_ARG = "REGISTRY_URL"
+
+        fun newInstance(registryUrl: String): RepositoryListFragment {
+            val arguments = Bundle()
+            arguments.putString(REGISTRY_URL_ARG, registryUrl)
+
+            val fragment = RepositoryListFragment()
+            fragment.arguments = arguments
+
+            return fragment
         }
     }
 
@@ -27,9 +37,16 @@ class RegistryListFragment : BaseFragment() {
     val errorView: View by bindView(R.id.error)
     val progressView: View by bindView(R.id.progress)
 
-    lateinit var adapter: RegistryAdapter
+    lateinit var mAdapter: RepositoryAdapter
 
-    val registryClicks = PublishSubject<Registry>()
+    val repositoryClicks = PublishSubject<Repository>()
+
+    lateinit var registryUrl: String
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        registryUrl = arguments.getString(REGISTRY_URL_ARG)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_registry_list, container, false)
@@ -47,19 +64,20 @@ class RegistryListFragment : BaseFragment() {
         recyclerView.setErrorView(errorView)
         recyclerView.setProgressView(progressView)
 
-        adapter = RegistryAdapter()
-        adapter.itemClickListener = object : OnItemClickListener {
+        mAdapter = RepositoryAdapter()
+        mAdapter.itemClickListener = object : OnItemClickListener {
             override fun onItemClicked(index: Int, view: View) {
-                val registry = adapter.registries[index]
-                registryClicks.onNext(registry)
+                val repository = mAdapter.repositories[index]
+                repositoryClicks.onNext(repository)
             }
         }
 
-        adapter.registries = ArrayList<Registry>()
-        for (i in 1..100) {
-            adapter.registries.add(Registry("http://abc.xyz/" + i, "Test " + i))
+        mAdapter.repositories = ArrayList<Repository>()
+        for (i in 1..10) {
+            val tags = RealmList<Tag>(Tag("abc"), Tag(registryUrl))
+            mAdapter.repositories.add(Repository("test_sds", tags))
         }
 
-        recyclerView.adapter = adapter
+        recyclerView.adapter = mAdapter
     }
 }

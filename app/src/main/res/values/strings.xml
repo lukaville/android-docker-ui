@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Docker UI</string>
+    <string name="app_name">Docker Registry UI</string>
     <string name="empty">There is no data available. Yet.</string>
     <string name="error">An error occurred</string>
     <string name="create">Create</string>
@@ -7,5 +7,6 @@
     <string name="registry_url">Registry URL</string>
     <string name="login">Basic auth login</string>
     <string name="password">Basic auth password</string>
-    <string name="add_registry">Add registry</string>
+    <string name="add_registry_title">Add registry</string>
+    <string name="images_title">Images</string>
 </resources>

@@ -1,4 +1,4 @@
-package ru.lukaville.dockerui.ui.android
+package ru.lukaville.dockerui.ui.android.core.router
 
 import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.android.autoActivitySingleton

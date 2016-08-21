@@ -6,7 +6,6 @@
               android:minHeight="72dp"
               android:orientation="horizontal"
               android:padding="16dp"
-              android:background="@drawable/bg_clickable"
 >
     <ImageView
         android:id="@+id/icon"

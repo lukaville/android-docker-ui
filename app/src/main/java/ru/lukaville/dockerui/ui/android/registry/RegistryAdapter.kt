@@ -7,9 +7,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import ru.lukaville.dockerui.R
-import ru.lukaville.dockerui.entities.registry.Registry
+import ru.lukaville.dockerui.entities.Registry
 import ru.lukaville.dockerui.ui.android.core.OnItemClickListener
 import ru.lukaville.dockerui.util.bindView
+import ru.lukaville.dockerui.util.getRandomColor
 
 class RegistryAdapter : RecyclerView.Adapter<RegistryAdapter.RegistryViewHolder>() {
 
@@ -26,7 +27,8 @@ class RegistryAdapter : RecyclerView.Adapter<RegistryAdapter.RegistryViewHolder>
 
         holder.title.text = registry.name
         holder.subtitle.text = registry.url
-        holder.icon.setImageResource(R.mipmap.ic_launcher)
+        holder.icon.setImageResource(R.drawable.ic_dashboard_black_24dp)
+        holder.icon.setColorFilter(getRandomColor(registry.url))
     }
 
     override fun getItemCount(): Int {

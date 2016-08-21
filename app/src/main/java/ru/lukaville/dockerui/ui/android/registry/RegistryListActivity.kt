@@ -6,7 +6,7 @@ import android.view.View
 import com.github.salomonbrys.kodein.instance
 import com.jakewharton.rxbinding.view.clicks
 import ru.lukaville.dockerui.R
-import ru.lukaville.dockerui.entities.registry.Registry
+import ru.lukaville.dockerui.entities.Registry
 import ru.lukaville.dockerui.presenter.registry.RegistryListPresenter
 import ru.lukaville.dockerui.ui.android.PresentedActivity
 import ru.lukaville.dockerui.ui.view.RegistryListView
