@@ -5,4 +5,5 @@ import rx.Observable
 
 interface RegistryListView : BaseView {
     fun registryClicks(): Observable<Registry>
+    fun createRegistry(): Observable<Unit>
 }

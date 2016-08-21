@@ -14,11 +14,11 @@
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <style name="ToolbarEditText" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="ToolbarEditText">
         <item name="colorControlActivated">#cacaca</item>
         <item name="colorControlHighlight">#cacaca</item>
         <item name="android:textColorHint">#b1ffffff</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">#ffffff</item>
     </style>
 
     <style name="FormEditText" parent="Theme.AppCompat.Light.DarkActionBar">
