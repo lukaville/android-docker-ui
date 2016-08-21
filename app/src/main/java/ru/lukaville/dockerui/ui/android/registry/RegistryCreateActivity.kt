@@ -4,16 +4,20 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
+import com.github.salomonbrys.kodein.instance
 import ru.lukaville.dockerui.R
 import ru.lukaville.dockerui.entities.Credentials
 import ru.lukaville.dockerui.entities.Registry
-import ru.lukaville.dockerui.ui.android.BaseActivity
+import ru.lukaville.dockerui.presenter.registry.RegistryCreatePresenter
+import ru.lukaville.dockerui.ui.android.PresentedActivity
 import ru.lukaville.dockerui.ui.view.RegistryCreateView
 import ru.lukaville.dockerui.util.bindView
 import rx.Observable
 import rx.subjects.PublishSubject
 
-class RegistryCreateActivity : BaseActivity(), RegistryCreateView {
+class RegistryCreateActivity : PresentedActivity<RegistryCreateView>(), RegistryCreateView {
+    val presenter: RegistryCreatePresenter by injector.instance()
+
     val createRegistry: PublishSubject<Registry> = PublishSubject.create()
 
     val nameEditText: EditText by bindView(R.id.name)
@@ -27,6 +31,12 @@ class RegistryCreateActivity : BaseActivity(), RegistryCreateView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initPresenter()
+    }
+
+    private fun initPresenter() {
+        presenter.view = this
+        registerPresenter(presenter)
     }
 
     private fun onCreateRegistry() {
@@ -45,6 +55,7 @@ class RegistryCreateActivity : BaseActivity(), RegistryCreateView {
         )
 
         createRegistry.onNext(registry)
+        finish()
     }
 
     override fun createRegistry(): Observable<Registry> {

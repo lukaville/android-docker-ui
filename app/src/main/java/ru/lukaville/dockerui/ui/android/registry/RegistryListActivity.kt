@@ -2,6 +2,7 @@ package ru.lukaville.dockerui.ui.android.registry
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.github.salomonbrys.kodein.instance
 import com.jakewharton.rxbinding.view.clicks
@@ -12,6 +13,7 @@ import ru.lukaville.dockerui.ui.android.PresentedActivity
 import ru.lukaville.dockerui.ui.view.RegistryListView
 import ru.lukaville.dockerui.util.bindView
 import rx.Observable
+import rx.Subscription
 
 class RegistryListActivity : PresentedActivity<RegistryListView>(), RegistryListView {
     val presenter: RegistryListPresenter by injector.instance()
@@ -58,5 +60,9 @@ class RegistryListActivity : PresentedActivity<RegistryListView>(), RegistryList
 
     override fun createRegistry(): Observable<Unit> {
         return addFab.clicks()
+    }
+
+    override fun subscribeRegistryList(registries: Observable<MutableList<Registry>>): Subscription {
+        return registryListFragment.subscribeRegistryList(registries)
     }
 }

@@ -4,7 +4,7 @@ import ru.lukaville.dockerui.entities.Registry
 import rx.Observable
 
 interface RegistryRepository {
-    fun getRegistries(): Observable<List<Registry>>
+    fun getRegistries(): Observable<MutableList<Registry>>
     fun getRegistry(url: String): Observable<Registry>
     fun addRegistry(registry: Registry)
     fun removeRegistry(registry: Registry)

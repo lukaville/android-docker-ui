@@ -5,7 +5,7 @@ import ru.lukaville.dockerui.entities.Registry
 import rx.Observable
 
 class RealmRegistryRepository(val realm: () -> Realm) : RegistryRepository {
-    override fun getRegistries(): Observable<List<Registry>> {
+    override fun getRegistries(): Observable<MutableList<Registry>> {
         return realm()
                 .where(Registry::class.java)
                 .findAll()

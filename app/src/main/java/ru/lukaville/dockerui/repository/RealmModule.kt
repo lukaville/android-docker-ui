@@ -1,7 +1,7 @@
 package ru.lukaville.dockerui.repository
 
-import android.content.Context
 import com.github.salomonbrys.kodein.Kodein
+import com.github.salomonbrys.kodein.android.autoActivitySingleton
 import com.github.salomonbrys.kodein.instance
 import com.github.salomonbrys.kodein.singleton
 import io.realm.Realm
@@ -12,9 +12,9 @@ val realmModule = Kodein.Module {
         Realm.getInstance(instance())
     }
 
-    bind<RealmConfiguration>() with singleton {
+    bind<RealmConfiguration>() with autoActivitySingleton {
         RealmConfiguration
-                .Builder(instance<Context>())
+                .Builder(it)
                 .deleteRealmIfMigrationNeeded()
                 .build()
     }

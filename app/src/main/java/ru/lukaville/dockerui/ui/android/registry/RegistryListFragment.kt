@@ -11,8 +11,9 @@ import ru.lukaville.dockerui.ui.android.BaseFragment
 import ru.lukaville.dockerui.ui.android.core.OnItemClickListener
 import ru.lukaville.dockerui.ui.android.core.widget.StateRecyclerView
 import ru.lukaville.dockerui.util.bindView
+import rx.Observable
+import rx.Subscription
 import rx.lang.kotlin.PublishSubject
-import java.util.*
 
 class RegistryListFragment : BaseFragment() {
     companion object {
@@ -32,7 +33,8 @@ class RegistryListFragment : BaseFragment() {
     val registryClicks = PublishSubject<Registry>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_registry_list, container, false)
+        val view = inflater.inflate(R.layout.fragment_registry_list, container, false)
+        return view
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -55,11 +57,15 @@ class RegistryListFragment : BaseFragment() {
             }
         }
 
-        adapter.registries = ArrayList<Registry>()
-        for (i in 1..100) {
-            adapter.registries.add(Registry("http://abc.xyz/" + i, "Test " + i))
-        }
-
+        adapter.registries = mutableListOf()
         recyclerView.adapter = adapter
+    }
+
+    fun subscribeRegistryList(registries: Observable<MutableList<Registry>>): Subscription {
+        return registries
+                .subscribe {
+                    adapter.registries = it
+                    adapter.notifyDataSetChanged()
+                }
     }
 }
