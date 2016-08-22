@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import ru.lukaville.dockerui.R
 import ru.lukaville.dockerui.entities.Image
+import ru.lukaville.dockerui.ui.DataState
 import ru.lukaville.dockerui.ui.android.BaseFragment
 import ru.lukaville.dockerui.ui.android.core.OnItemClickListener
 import ru.lukaville.dockerui.ui.android.core.widget.StateRecyclerView
@@ -38,7 +39,7 @@ class ImageListFragment : BaseFragment() {
     val repositoryClicks = PublishSubject<Image>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_registry_list, container, false)
+        return inflater.inflate(R.layout.fragment_image_list, container, false)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -64,10 +65,14 @@ class ImageListFragment : BaseFragment() {
         recyclerView.adapter = mAdapter
     }
 
-    fun subscribeImageList(images: Observable<MutableList<Image>>): Subscription {
-        return images.subscribe {
-            mAdapter.images = it
-            mAdapter.notifyDataSetChanged()
+    fun subscribeImageList(data: Observable<DataState<MutableList<Image>>>): Subscription {
+        return data.subscribe {
+            recyclerView.setState(it)
+
+            if (it is DataState.Content) {
+                mAdapter.images = it.data
+                mAdapter.notifyDataSetChanged()
+            }
         }
     }
 }

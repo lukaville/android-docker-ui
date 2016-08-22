@@ -5,6 +5,7 @@ import com.github.salomonbrys.kodein.factory
 import ru.lukaville.dockerui.R
 import ru.lukaville.dockerui.entities.Image
 import ru.lukaville.dockerui.presenter.image.ImageListPresenter
+import ru.lukaville.dockerui.ui.DataState
 import ru.lukaville.dockerui.ui.android.PresentedActivity
 import ru.lukaville.dockerui.ui.view.ImageListView
 import rx.Observable
@@ -21,7 +22,7 @@ class ImageListActivity : PresentedActivity<ImageListView>(), ImageListView {
     lateinit var mImageListFragment: ImageListFragment
 
     override fun getLayout(): Int {
-        return R.layout.activity_repository_list
+        return R.layout.activity_image_list
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +37,7 @@ class ImageListActivity : PresentedActivity<ImageListView>(), ImageListView {
 
         supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.repository_list_fragment, mImageListFragment)
+                .replace(R.id.image_list_fragment, mImageListFragment)
                 .commitAllowingStateLoss()
     }
 
@@ -50,7 +51,7 @@ class ImageListActivity : PresentedActivity<ImageListView>(), ImageListView {
         return BACK_ARROW_INDICATOR
     }
 
-    override fun subscribeImageList(images: Observable<MutableList<Image>>): Subscription {
+    override fun subscribeImageList(images: Observable<DataState<MutableList<Image>>>): Subscription {
         return mImageListFragment.subscribeImageList(images)
     }
 }
