@@ -23,6 +23,10 @@ class RegistryListPresenter(override val kodein: Kodein) : BasePresenter<Registr
         view.createRegistry().subscribe {
             router.createRegistry()
         }
+
+        view.clearClicks().subscribe {
+            registryRepository.clearRegistries()
+        }
     }
 
     override fun onResume() {

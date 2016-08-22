@@ -9,4 +9,5 @@
     <string name="password">Basic auth password</string>
     <string name="add_registry_title">Add registry</string>
     <string name="images_title">Images</string>
+    <string name="clear_registries">Clear registries</string>
 </resources>

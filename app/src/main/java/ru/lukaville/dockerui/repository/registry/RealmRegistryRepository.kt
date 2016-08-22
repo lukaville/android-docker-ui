@@ -32,4 +32,10 @@ class RealmRegistryRepository(val realm: () -> Realm) : RegistryRepository {
             registry.deleteFromRealm()
         }
     }
+
+    override fun clearRegistries() {
+        realm().executeTransaction {
+            it.delete(Registry::class.java)
+        }
+    }
 }

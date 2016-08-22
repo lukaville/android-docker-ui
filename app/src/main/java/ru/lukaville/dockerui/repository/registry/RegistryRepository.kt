@@ -8,4 +8,5 @@ interface RegistryRepository {
     fun getRegistry(url: String): Observable<Registry>
     fun addRegistry(registry: Registry)
     fun removeRegistry(registry: Registry)
+    fun clearRegistries()
 }

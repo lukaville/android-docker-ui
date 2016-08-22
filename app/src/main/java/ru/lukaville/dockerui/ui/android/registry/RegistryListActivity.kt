@@ -2,7 +2,8 @@ package ru.lukaville.dockerui.ui.android.registry
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import com.github.salomonbrys.kodein.instance
 import com.jakewharton.rxbinding.view.clicks
@@ -14,12 +15,14 @@ import ru.lukaville.dockerui.ui.view.RegistryListView
 import ru.lukaville.dockerui.util.bindView
 import rx.Observable
 import rx.Subscription
+import rx.lang.kotlin.PublishSubject
 
 class RegistryListActivity : PresentedActivity<RegistryListView>(), RegistryListView {
     val presenter: RegistryListPresenter by injector.instance()
 
     val addFab: View by bindView(R.id.add_fab)
     lateinit var registryListFragment: RegistryListFragment
+    val clearClicksObservable = PublishSubject<Unit>()
 
     override fun getLayout(): Int {
         return R.layout.activity_registry_list
@@ -54,12 +57,28 @@ class RegistryListActivity : PresentedActivity<RegistryListView>(), RegistryList
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.activity_registry_list, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.action_clear -> clearClicksObservable.onNext(Unit)
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun registryClicks(): Observable<Registry> {
         return registryListFragment.registryClicks
     }
 
     override fun createRegistry(): Observable<Unit> {
         return addFab.clicks()
+    }
+
+    override fun clearClicks(): Observable<Unit> {
+        return clearClicksObservable
     }
 
     override fun subscribeRegistryList(registries: Observable<MutableList<Registry>>): Subscription {
