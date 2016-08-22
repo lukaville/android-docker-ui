@@ -1,30 +1,26 @@
-package ru.lukaville.dockerui.ui.android.repository
+package ru.lukaville.dockerui.ui.android.image
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import io.realm.RealmList
 import ru.lukaville.dockerui.R
-import ru.lukaville.dockerui.entities.Repository
-import ru.lukaville.dockerui.entities.Tag
+import ru.lukaville.dockerui.entities.Image
 import ru.lukaville.dockerui.ui.android.BaseFragment
 import ru.lukaville.dockerui.ui.android.core.OnItemClickListener
 import ru.lukaville.dockerui.ui.android.core.widget.StateRecyclerView
 import ru.lukaville.dockerui.util.bindView
+import rx.Observable
+import rx.Subscription
 import rx.lang.kotlin.PublishSubject
-import java.util.*
 
-class RepositoryListFragment : BaseFragment() {
+class ImageListFragment : BaseFragment() {
     companion object {
-        const val REGISTRY_URL_ARG = "REGISTRY_URL"
-
-        fun newInstance(registryUrl: String): RepositoryListFragment {
+        fun newInstance(): ImageListFragment {
             val arguments = Bundle()
-            arguments.putString(REGISTRY_URL_ARG, registryUrl)
 
-            val fragment = RepositoryListFragment()
+            val fragment = ImageListFragment()
             fragment.arguments = arguments
 
             return fragment
@@ -37,16 +33,9 @@ class RepositoryListFragment : BaseFragment() {
     val errorView: View by bindView(R.id.error)
     val progressView: View by bindView(R.id.progress)
 
-    lateinit var mAdapter: RepositoryAdapter
+    lateinit var mAdapter: ImageAdapter
 
-    val repositoryClicks = PublishSubject<Repository>()
-
-    lateinit var registryUrl: String
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        registryUrl = arguments.getString(REGISTRY_URL_ARG)
-    }
+    val repositoryClicks = PublishSubject<Image>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_registry_list, container, false)
@@ -64,20 +53,21 @@ class RepositoryListFragment : BaseFragment() {
         recyclerView.setErrorView(errorView)
         recyclerView.setProgressView(progressView)
 
-        mAdapter = RepositoryAdapter()
+        mAdapter = ImageAdapter()
         mAdapter.itemClickListener = object : OnItemClickListener {
             override fun onItemClicked(index: Int, view: View) {
-                val repository = mAdapter.repositories[index]
+                val repository = mAdapter.images[index]
                 repositoryClicks.onNext(repository)
             }
         }
 
-        mAdapter.repositories = ArrayList<Repository>()
-        for (i in 1..10) {
-            val tags = RealmList<Tag>(Tag("abc"), Tag(registryUrl))
-            mAdapter.repositories.add(Repository("test_sds", tags))
-        }
-
         recyclerView.adapter = mAdapter
+    }
+
+    fun subscribeImageList(images: Observable<MutableList<Image>>): Subscription {
+        return images.subscribe {
+            mAdapter.images = it
+            mAdapter.notifyDataSetChanged()
+        }
     }
 }

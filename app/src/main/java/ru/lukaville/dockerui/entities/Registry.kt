@@ -7,5 +7,5 @@ open class Registry(
         @PrimaryKey
         open var url: String = "",
         open var name: String = "",
-        open var credentials: Credentials? = Credentials()
+        open var credentials: Credentials = Credentials()
 ) : RealmObject()

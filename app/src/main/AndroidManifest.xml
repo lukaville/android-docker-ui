@@ -24,7 +24,7 @@
         >
         </activity>
         <activity
-            android:name=".ui.android.repository.RepositoryListActivity"
+            android:name=".ui.android.image.ImageListActivity"
             android:label="@string/images_title"
         >
         </activity>

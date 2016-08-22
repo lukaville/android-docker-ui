@@ -1,4 +1,4 @@
-package ru.lukaville.dockerui.ui.android.repository
+package ru.lukaville.dockerui.ui.android.image
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -7,23 +7,23 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import ru.lukaville.dockerui.R
-import ru.lukaville.dockerui.entities.Repository
+import ru.lukaville.dockerui.entities.Image
 import ru.lukaville.dockerui.ui.android.core.OnItemClickListener
 import ru.lukaville.dockerui.util.bindView
 import ru.lukaville.dockerui.util.getRandomColor
 
-class RepositoryAdapter : RecyclerView.Adapter<RepositoryAdapter.RepositoryViewHolder>() {
+class ImageAdapter : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
 
     var itemClickListener: OnItemClickListener? = null
 
-    var repositories: MutableList<Repository> = arrayListOf()
-        set(s: MutableList<Repository>) {
+    var images: MutableList<Image> = arrayListOf()
+        set(s: MutableList<Image>) {
             field = s
             notifyDataSetChanged()
         }
 
-    override fun onBindViewHolder(holder: RepositoryViewHolder, position: Int) {
-        val repository = repositories[position]
+    override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
+        val repository = images[position]
 
         holder.title.text = repository.name
         holder.subtitle.text = repository.tags.joinToString()
@@ -32,15 +32,15 @@ class RepositoryAdapter : RecyclerView.Adapter<RepositoryAdapter.RepositoryViewH
     }
 
     override fun getItemCount(): Int {
-        return repositories.size
+        return images.size
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RepositoryViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ImageViewHolder {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.item_repository, parent, false)
-        return RepositoryViewHolder(view)
+        return ImageViewHolder(view)
     }
 
-    inner class RepositoryViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    inner class ImageViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val title: TextView by bindView(R.id.title)
         val subtitle: TextView by bindView(R.id.subtitle)
         val icon: ImageView by bindView(R.id.icon)

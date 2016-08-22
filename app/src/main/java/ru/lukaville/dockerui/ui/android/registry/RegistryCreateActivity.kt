@@ -41,7 +41,10 @@ class RegistryCreateActivity : PresentedActivity<RegistryCreateView>(), Registry
 
     private fun onCreateRegistry() {
         val credentials = when (loginEditText.length()) {
-            0 -> null
+            0 -> Credentials(
+                    "",
+                    ""
+            )
             else -> Credentials(
                     loginEditText.text.toString(),
                     passwordEditText.text.toString()

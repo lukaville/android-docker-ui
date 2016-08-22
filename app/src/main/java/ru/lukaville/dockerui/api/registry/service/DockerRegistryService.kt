@@ -11,8 +11,8 @@ interface DockerRegistryService {
     fun checkVersion(): Observable<Unit>
 
     @GET("v2/_catalog")
-    fun getRepositories(): Observable<CatalogResponse>
+    fun getImages(): Observable<CatalogResponse>
 
     @GET("v2/{repository}/tags/list")
-    fun getTags(@Path("repository") repository: String): Observable<TagsResponse>
+    fun getTags(@Path("repository") image: String): Observable<TagsResponse>
 }
