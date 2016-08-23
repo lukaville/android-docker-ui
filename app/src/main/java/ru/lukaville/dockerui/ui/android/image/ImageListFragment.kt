@@ -69,9 +69,15 @@ class ImageListFragment : BaseFragment() {
         return data.subscribe {
             recyclerView.setState(it)
 
-            if (it is DataState.Content) {
-                mAdapter.images = it.data
-                mAdapter.notifyDataSetChanged()
+            when (it) {
+                is DataState.Content -> {
+                    mAdapter.images = it.data
+                    mAdapter.notifyDataSetChanged()
+                }
+                is DataState.Empty -> {
+                    mAdapter.images = arrayListOf()
+                    mAdapter.notifyDataSetChanged()
+                }
             }
         }
     }

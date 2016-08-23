@@ -13,7 +13,7 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_gravity="center"
-        android:src="@drawable/ic_warning_grey_400_24dp"
+        android:src="@drawable/ic_dashboard_grey_400_24dp"
         />
 
     <TextView
@@ -23,7 +23,7 @@
         android:gravity="center"
         android:layout_marginTop="6dp"
         android:textSize="18sp"
-        android:text="@string/error"
+        android:text="@string/empty_registries"
         />
 
 </LinearLayout>

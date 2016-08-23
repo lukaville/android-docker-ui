@@ -2,11 +2,13 @@ package ru.lukaville.dockerui.ui.android.registry
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ru.lukaville.dockerui.R
 import ru.lukaville.dockerui.entities.Registry
+import ru.lukaville.dockerui.ui.DataState
 import ru.lukaville.dockerui.ui.android.BaseFragment
 import ru.lukaville.dockerui.ui.android.core.OnItemClickListener
 import ru.lukaville.dockerui.ui.android.core.widget.StateRecyclerView
@@ -61,11 +63,23 @@ class RegistryListFragment : BaseFragment() {
         recyclerView.adapter = adapter
     }
 
-    fun subscribeRegistryList(registries: Observable<MutableList<Registry>>): Subscription {
+    fun subscribeRegistryList(registries: Observable<DataState<MutableList<Registry>>>): Subscription {
+        Log.d("RegistryListFragment", "subscribeRegistryList")
         return registries
-                .subscribe {
-                    adapter.registries = it
-                    adapter.notifyDataSetChanged()
-                }
+                .subscribe ({
+                    Log.d("RegistryListFragment", "New data: " + it.toString())
+                    recyclerView.setState(it)
+
+                    when (it) {
+                        is DataState.Content -> {
+                            adapter.registries = it.data
+                            adapter.notifyDataSetChanged()
+                        }
+                        is DataState.Empty -> {
+                            adapter.registries = arrayListOf()
+                            adapter.notifyDataSetChanged()
+                        }
+                    }
+                })
     }
 }

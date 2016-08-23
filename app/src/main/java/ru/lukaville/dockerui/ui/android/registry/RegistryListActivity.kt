@@ -10,6 +10,7 @@ import com.jakewharton.rxbinding.view.clicks
 import ru.lukaville.dockerui.R
 import ru.lukaville.dockerui.entities.Registry
 import ru.lukaville.dockerui.presenter.registry.RegistryListPresenter
+import ru.lukaville.dockerui.ui.DataState
 import ru.lukaville.dockerui.ui.android.PresentedActivity
 import ru.lukaville.dockerui.ui.view.RegistryListView
 import ru.lukaville.dockerui.util.bindView
@@ -81,7 +82,7 @@ class RegistryListActivity : PresentedActivity<RegistryListView>(), RegistryList
         return clearClicksObservable
     }
 
-    override fun subscribeRegistryList(registries: Observable<MutableList<Registry>>): Subscription {
-        return registryListFragment.subscribeRegistryList(registries)
+    override fun subscribeRegistryList(data: Observable<DataState<MutableList<Registry>>>): Subscription {
+        return registryListFragment.subscribeRegistryList(data)
     }
 }

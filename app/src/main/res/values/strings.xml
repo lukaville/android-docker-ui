@@ -3,11 +3,12 @@
     <string name="empty">There is no data available. Yet.</string>
     <string name="error">An error occurred</string>
     <string name="create">Create</string>
-    <string name="enter_title">Enter title</string>
-    <string name="registry_url">Registry URL</string>
-    <string name="login">Basic auth login</string>
-    <string name="password">Basic auth password</string>
+    <string name="enter_title">Title</string>
+    <string name="registry_url">URL (https://example.com/)</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
     <string name="add_registry_title">Add registry</string>
     <string name="images_title">Images</string>
     <string name="clear_registries">Clear registries</string>
+    <string name="empty_registries">Add new registry, click on plus button</string>
 </resources>

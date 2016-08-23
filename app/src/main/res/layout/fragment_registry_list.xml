@@ -16,7 +16,7 @@
 
     <include
         android:id="@+id/empty"
-        layout="@layout/state_empty"/>
+        layout="@layout/state_empty_registries"/>
 
     <include
         android:id="@+id/error"
