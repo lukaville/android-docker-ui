@@ -1,6 +1,5 @@
 package ru.lukaville.dockerui.presenter.registry
 
-import android.util.Log
 import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.instance
 import ru.lukaville.dockerui.entities.Registry
@@ -8,13 +7,13 @@ import ru.lukaville.dockerui.presenter.BasePresenter
 import ru.lukaville.dockerui.repository.Storage
 import ru.lukaville.dockerui.repository.registry.RegistryRepository
 import ru.lukaville.dockerui.ui.DataState
-import ru.lukaville.dockerui.ui.android.core.router.Router
+import ru.lukaville.dockerui.ui.Router
 import ru.lukaville.dockerui.ui.view.RegistryListView
 import rx.lang.kotlin.PublishSubject
 import rx.subscriptions.CompositeSubscription
 
 class RegistryListPresenter(override val kodein: Kodein) : BasePresenter<RegistryListView>() {
-    val subscription: CompositeSubscription = CompositeSubscription()
+    var subscription: CompositeSubscription = CompositeSubscription()
 
     val router = kodein.instance<Router>()
     val registryRepository = kodein.instance<RegistryRepository>(Storage.Database)
@@ -26,7 +25,7 @@ class RegistryListPresenter(override val kodein: Kodein) : BasePresenter<Registr
             router.detailRegistry(it)
         }
 
-        view.createRegistry().subscribe {
+        view.createRegistryClicks().subscribe {
             router.createRegistry()
         }
 
@@ -38,28 +37,26 @@ class RegistryListPresenter(override val kodein: Kodein) : BasePresenter<Registr
     override fun onResume() {
         super.onResume()
 
-        subscription.add(
-                view.subscribeRegistryList(data)
-        )
+        subscription = CompositeSubscription()
 
-        data.onNext(
-                DataState.Progress()
-        )
+        val registryListSubscription = view.subscribeRegistryList(data)
+        subscription.add(registryListSubscription)
 
-        subscription.add(
-                registryRepository
-                        .getRegistries()
-                        .map {
-                            if (it.size == 0) {
-                                Log.d("RegistryListPresenter", "New registries: Empty")
-                                DataState.Empty<MutableList<Registry>>()
-                            } else {
-                                Log.d("RegistryListPresenter", "New registries: Content")
-                                DataState.Content(it)
-                            }
-                        }
-                        .subscribe(data)
-        )
+        data.onNext(DataState.Progress())
+
+        val dataSubscription = registryRepository
+                .getRegistries()
+                .map {
+                    if (it.size == 0) {
+                        DataState.Empty<MutableList<Registry>>()
+                    } else {
+                        DataState.Content(it)
+                    }
+                }
+                .subscribe {
+                    data.onNext(it)
+                }
+        subscription.add(dataSubscription)
     }
 
     override fun onPause() {

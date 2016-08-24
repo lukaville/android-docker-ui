@@ -74,7 +74,7 @@ class RegistryListActivity : PresentedActivity<RegistryListView>(), RegistryList
         return registryListFragment.registryClicks
     }
 
-    override fun createRegistry(): Observable<Unit> {
+    override fun createRegistryClicks(): Observable<Unit> {
         return addFab.clicks()
     }
 

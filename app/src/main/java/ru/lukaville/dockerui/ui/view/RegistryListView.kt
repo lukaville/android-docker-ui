@@ -7,7 +7,7 @@ import rx.Subscription
 
 interface RegistryListView : BaseView {
     fun registryClicks(): Observable<Registry>
-    fun createRegistry(): Observable<Unit>
+    fun createRegistryClicks(): Observable<Unit>
     fun clearClicks(): Observable<Unit>
     fun subscribeRegistryList(data: Observable<DataState<MutableList<Registry>>>): Subscription
 }
