@@ -61,7 +61,7 @@ class ImageListPresenter(override val kodein: Kodein, val apiUrl: String) : Base
                             }
                         }
                         .onErrorReturn {
-                            DataState.Error(it.cause)
+                            DataState.Error(it)
                         }
                         .subscribe(data)
         )

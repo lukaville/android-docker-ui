@@ -53,6 +53,9 @@ class RegistryListPresenter(override val kodein: Kodein) : BasePresenter<Registr
                         DataState.Content(it)
                     }
                 }
+                .onErrorReturn {
+                    DataState.Error(it)
+                }
                 .subscribe {
                     data.onNext(it)
                 }

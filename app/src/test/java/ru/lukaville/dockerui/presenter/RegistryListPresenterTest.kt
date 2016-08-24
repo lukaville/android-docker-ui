@@ -28,7 +28,7 @@ class RegistryListPresenterTest {
     val testOtherRegistryList = mutableListOf(
             Registry("http://test1", "name1", Credentials("admin", "pass")),
             Registry("http://test2", "name2", Credentials("admin", "pass")),
-            Registry("http://test2", "name2", Credentials("admin", "pass"))
+            Registry("http://test3", "name3", Credentials("admin", "pass"))
     )
 
     lateinit var presenter: RegistryListPresenter
@@ -81,12 +81,38 @@ class RegistryListPresenterTest {
     }
 
     @Test
-    fun testLoadRegistries() {
+    fun testProgress() {
         presenter.onResume()
         view.getLastEvent() shouldEqual DataState.Progress<MutableList<Registry>>()
+    }
+
+    @Test
+    fun testLoadRegistries() {
+        presenter.onResume()
+        view.getLastEvent()
 
         registryRepositoryObservable.onNext(testRegistryList)
         view.getLastEvent() shouldEqual DataState.Content(testRegistryList)
+    }
+
+    @Test
+    fun testRegistriesEmpty() {
+        presenter.onResume()
+        view.getLastEvent()
+
+        registryRepositoryObservable.onNext(mutableListOf())
+        view.getLastEvent() shouldEqual DataState.Empty<MutableList<Registry>>()
+    }
+
+
+    @Test
+    fun testRegistriesLoadError() {
+        presenter.onResume()
+        view.getLastEvent()
+
+        val error = RuntimeException()
+        registryRepositoryObservable.onError(error)
+        view.getLastEvent() shouldEqual DataState.Error<MutableList<Registry>>(error)
     }
 
     @Test
