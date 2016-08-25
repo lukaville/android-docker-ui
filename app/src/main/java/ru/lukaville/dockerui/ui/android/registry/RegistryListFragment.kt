@@ -2,7 +2,6 @@ package ru.lukaville.dockerui.ui.android.registry
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,10 +63,8 @@ class RegistryListFragment : BaseFragment() {
     }
 
     fun subscribeRegistryList(registries: Observable<DataState<MutableList<Registry>>>): Subscription {
-        Log.d("RegistryListFragment", "subscribeRegistryList")
         return registries
                 .subscribe ({
-                    Log.d("RegistryListFragment", "New data: " + it.toString())
                     recyclerView.setState(it)
 
                     when (it) {
