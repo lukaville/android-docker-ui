@@ -20,7 +20,7 @@ sealed class DataState<T> {
         }
 
         override fun equals(other: Any?): Boolean {
-            if (other is Content<*> && data != null) {
+            if (this.javaClass.equals(other?.javaClass) && other is Content<*> && data != null) {
                 return data.equals(other.data)
             }
             return false

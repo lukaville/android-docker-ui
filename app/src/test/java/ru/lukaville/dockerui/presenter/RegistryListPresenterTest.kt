@@ -8,29 +8,20 @@ import com.nhaarman.mockito_kotlin.verify
 import org.amshove.kluent.shouldEqual
 import org.junit.Before
 import org.junit.Test
-import ru.lukaville.dockerui.entities.Credentials
 import ru.lukaville.dockerui.entities.Registry
 import ru.lukaville.dockerui.mock.MockRegistryListView
 import ru.lukaville.dockerui.presenter.registry.RegistryListPresenter
 import ru.lukaville.dockerui.repository.Storage
 import ru.lukaville.dockerui.repository.registry.RegistryRepository
+import ru.lukaville.dockerui.testOtherRegistryList
+import ru.lukaville.dockerui.testRegistry
+import ru.lukaville.dockerui.testRegistryList
 import ru.lukaville.dockerui.ui.DataState
 import ru.lukaville.dockerui.ui.Router
 import rx.lang.kotlin.PublishSubject
 import rx.subjects.PublishSubject
 
 class RegistryListPresenterTest {
-    val testRegistryList = mutableListOf(
-            Registry("http://test1", "name1", Credentials("admin", "pass")),
-            Registry("http://test2", "name2", Credentials("admin", "pass"))
-    )
-
-    val testOtherRegistryList = mutableListOf(
-            Registry("http://test1", "name1", Credentials("admin", "pass")),
-            Registry("http://test2", "name2", Credentials("admin", "pass")),
-            Registry("http://test3", "name3", Credentials("admin", "pass"))
-    )
-
     lateinit var presenter: RegistryListPresenter
     lateinit var view: MockRegistryListView
 
@@ -69,9 +60,8 @@ class RegistryListPresenterTest {
 
     @Test
     fun testDetailRegistry() {
-        val registry = Registry("http://test", "name", Credentials("admin", "pass"))
-        view.registryClick(registry)
-        verify(routerMock).detailRegistry(registry)
+        view.registryClick(testRegistry)
+        verify(routerMock).detailRegistry(testRegistry)
     }
 
     @Test

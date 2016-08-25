@@ -16,7 +16,8 @@ import rx.lang.kotlin.PublishSubject
 import rx.subscriptions.CompositeSubscription
 
 class ImageListPresenter(override val kodein: Kodein, val apiUrl: String) : BasePresenter<ImageListView>() {
-    val subscription: CompositeSubscription = CompositeSubscription()
+    var subscription: CompositeSubscription = CompositeSubscription()
+
     val registryRepository: RegistryRepository = kodein.instance(Storage.Database)
     val imageRepositoryFactory: (Registry) -> ImageRepository = kodein.factory<Registry, ImageRepository>(Storage.Network)
 
@@ -24,6 +25,8 @@ class ImageListPresenter(override val kodein: Kodein, val apiUrl: String) : Base
 
     override fun onResume() {
         super.onResume()
+
+        subscription = CompositeSubscription()
 
         subscription.add(
                 view.subscribeImageList(
