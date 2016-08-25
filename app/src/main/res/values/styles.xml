@@ -1,6 +1,9 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -12,7 +15,7 @@
         <item name="colorControlNormal">@color/white</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
     <style name="ToolbarEditText">
         <item name="colorControlActivated">#cacaca</item>
@@ -21,7 +24,7 @@
         <item name="android:textColor">#ffffff</item>
     </style>
 
-    <style name="FormEditText" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="FormEditText" parent="AppTheme">
         <item name="android:layout_marginBottom">16dp</item>
     </style>
 </resources>

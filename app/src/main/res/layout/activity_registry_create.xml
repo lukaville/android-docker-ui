@@ -28,6 +28,7 @@
             android:background="@null"
             android:hint="@string/enter_title"
             android:theme="@style/ToolbarEditText"
+            android:textColor="@color/white"
         />
     </android.support.design.widget.AppBarLayout>
 
@@ -55,7 +56,6 @@
                 android:hint="@string/login"
                 android:theme="@style/FormEditText"
             />
-
 
             <EditText
                 android:id="@+id/password"
